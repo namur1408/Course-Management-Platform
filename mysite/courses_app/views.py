@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course
 from .forms import CourseForm
 from django.contrib.auth.decorators import login_required
@@ -14,7 +14,10 @@ def create_course(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
-            form.save()
+            course = form.save(commit=False)
+            course.creator = request.user
+            course.save()
+            form.save_m2m()
             return redirect('course_list')
     else:
         form = CourseForm()
@@ -30,4 +33,11 @@ def enroll_course(request, course_id):
     course.members.add(member)
     return redirect('course_list')
 
-
+def delete_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if course.creator != request.user:
+        return redirect('course_list')
+    if request.method == 'POST':
+        course.delete()
+        return redirect('course_list')
+    return render(request, 'courses/course_confirm_delete.html', {'course': course})
