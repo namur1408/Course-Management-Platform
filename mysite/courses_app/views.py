@@ -10,6 +10,7 @@ def course_list(request):
     courses = Course.objects.all()
     return render(request, 'courses/course_list.html', {'courses': courses})
 
+@login_required
 def create_course(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
@@ -26,13 +27,10 @@ def create_course(request):
 @login_required
 def enroll_course(request, course_id):
     course = Course.objects.get(id=course_id)
-    try:
-        member = Member.objects.get(user=request.user)
-    except ObjectDoesNotExist:
-        member = Member.objects.create(user=request.user)
-    course.members.add(member)
+    course.members.add(request.user)
     return redirect('course_list')
 
+@login_required
 def delete_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if course.creator != request.user:

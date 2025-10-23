@@ -45,15 +45,14 @@
                   </p>
 
                   <p class="small text-secondary mb-2">
-                    <strong>Members:</strong>
-                    {% if course.members.all %}
+                      <strong>Members:</strong>
                       {% for m in course.members.all %}
-                        {{ m.user.username }}{% if not forloop.last %}, {% endif %}
+                          {{ m.username }}{% if not forloop.last %}, {% endif %}
                       {% empty %}
                         <span class="text-muted">No members yet</span>
                       {% endfor %}
-                    {% endif %}
                   </p>
+
 
                   {% if user.is_authenticated %}
                     <form action="{% url 'enroll_course' course.id %}" method="post">
