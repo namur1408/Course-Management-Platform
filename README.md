@@ -4,8 +4,6 @@ A simple Django web application that manages courses and members.
 Users can register, log in, and enroll in available courses.
 
 
-
-
 ## Installation
 
 1. Clone the repository:
@@ -58,6 +56,8 @@ Users can register, log in, and enroll in available courses.
 - Course Management:
 
     - Create new courses with title, description, start and end date.
+ 
+    - Delete course.
 
     - Prevents duplicate course names using form validation.
 
@@ -68,7 +68,8 @@ Users can register, log in, and enroll in available courses.
     - Authenticated users can enroll in courses.
 
     - Many-to-many relationship between Course and Member.
-
+ 
+- Custom User
 
 ##  Project Structure
 ```text
@@ -104,6 +105,8 @@ mysite/
 - Python 3.13
 
 - Django 5.2
+
+- pillow 12.0
  
 - Bootstrap 5 for styling forms
 
