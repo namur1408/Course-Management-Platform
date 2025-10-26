@@ -17,7 +17,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'phone', 'first_name', 'last_name', 'address', 'password', 'confirm_password', 'preffered_language']
+        fields = ['username', 'email', 'phone', 'first_name', 'last_name', 'date_of_birth', 'address', 'password', 'confirm_password', 'preffered_language']
         widgets = {
             'email': forms.EmailInput(attrs={'placeholder': 'Enter your email address', 'class': "form-control"}),
             'phone': forms.TextInput(attrs={'placeholder': 'Enter your phone number', 'class': "form-control"}),
@@ -25,6 +25,7 @@ class RegisterForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'placeholder': 'Enter your last name', 'class': "form-control"}),
             'address': forms.TextInput(attrs={'placeholder': 'Enter your address', 'class': "form-control"}),
             'username': forms.TextInput(attrs={'placeholder': 'Enter your username', 'class': "form-control"}),
+            'date_of_birth': forms.DateTimeInput(attrs={'type': 'date', 'class': 'form-control'}),
         }
 
     def clean(self):
