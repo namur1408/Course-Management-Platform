@@ -15,3 +15,7 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        permissions = [
+            ("can_delete_courses", "Can delete any course"),
+        ]
