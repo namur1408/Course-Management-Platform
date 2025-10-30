@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager, UserManager
 from django.utils import timezone
 
-class TaskUserManager(BaseUserManager):
+class MemberManager(BaseUserManager):
     def create_user(self, email, phone, password=None, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
@@ -30,6 +30,7 @@ class Member(AbstractUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name='email address', null=True)
     phone = models.CharField(max_length=20, unique=True, verbose_name='Phone number')
     first_name = models.CharField(max_length=30, verbose_name='First name', blank=True)
+    last_name = models.CharField(max_length=50, verbose_name='First name', blank=True)
     date_of_birth = models.DateField(null=True, verbose_name='Date of birth', blank=True)
     address = models.CharField(max_length=255, verbose_name='Address')
     profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
@@ -41,7 +42,7 @@ class Member(AbstractUser, PermissionsMixin):
         ('uk', 'Ukrainian'),
     ], default='en')
 
-    objects = TaskUserManager()
+    objects = MemberManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['phone']
 
@@ -55,3 +56,16 @@ class Member(AbstractUser, PermissionsMixin):
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'.strip()
+
+class BillingAdress(models.Model):
+    user = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='billing_adresses')
+    city = models.CharField(max_length=30, verbose_name='City')
+    street = models.CharField(max_length=30, verbose_name='Street')
+    postal_code = models.CharField(max_length=10, verbose_name='Postal code')
+
+    class Meta:
+        verbose_name = 'Billing Adress'
+        verbose_name_plural = 'Billing Adresses'
+
+    def __str__(self):
+        return f'{self.city}, {self.street}'
