@@ -18,4 +18,15 @@ class Course(models.Model):
     class Meta:
         permissions = [
             ("can_delete_courses", "Can delete any course"),
+            ("can_edit_courses", "Can edit any course"),
         ]
+
+
+class Comment(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.user.username} on {self.course.title}'
