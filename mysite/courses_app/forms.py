@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Course
+from django.utils import timezone
 
 class CourseForm(forms.ModelForm):
     class Meta:
@@ -23,7 +24,10 @@ class CourseForm(forms.ModelForm):
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
 
-        if start_date and end_date and start_date > end_date:
-            raise ValidationError("Course start time must be before course end time!")
+        if start_date and end_date:
+            if start_date > end_date:
+                raise ValidationError("Start date must be before end date!")
+            if start_date < timezone.now():
+                raise ValidationError("Start date cannot be in the past!")
 
         return cleaned_data

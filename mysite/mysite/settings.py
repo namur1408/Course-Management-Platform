@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-9)(no*z$4d^bl$zf%%2+no$_8i(k%2v$#z23zbabup)um8$)vl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses_app.apps.CoursesAppConfig',
     'members_app.apps.MembersAppConfig',
+    'library.apps.LibraryConfig',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/registration/login/'
 LOGIN_REDIRECT_URL = '/courses/'
 AUTH_USER_MODEL = 'members_app.Member'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://hyperglycaemic-ricardo-overconservatively.ngrok-free.dev',
+    'http://hyperglycaemic-ricardo-overconservatively.ngrok-free.dev',
+]
+
