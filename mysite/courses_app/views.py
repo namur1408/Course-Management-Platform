@@ -19,6 +19,7 @@ class CourseCreateView(LoginRequiredMixin, CreateView):
     template_name = 'courses/create_course.html'
     context_object_name = 'courses'
     success_url = reverse_lazy('course_list')
+
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super().form_valid(form)
@@ -72,7 +73,7 @@ class CourseUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                 or self.request.user.has_perm('courses_app.can_edit_course')
         )
 
-class CourseDetailView(DetailView):
+class CourseDetailView(LoginRequiredMixin, DetailView):
     model = Course
     template_name = 'courses/course_detail.html'
     context_object_name = 'course'
@@ -82,6 +83,16 @@ class CourseDetailView(DetailView):
         context['comments'] = Comment.objects.filter(course=self.object).order_by('-created_at')
         return context
 
+class CommentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Comment
+    template_name = 'courses/comment_confirm_delete.html'
+    context_object_name = 'comment'
+    permission_required = 'courses_app.can_delete_comment'
 
-
-
+    def has_permission(self):
+        comment = self.get_object()
+        return (comment.user == self.request.user
+                or self.request.user.has_perm('courses_app.can_delete_comment')
+                )
+    def get_success_url(self):
+        return reverse_lazy('course_detail', kwargs={'pk': self.object.course.pk})

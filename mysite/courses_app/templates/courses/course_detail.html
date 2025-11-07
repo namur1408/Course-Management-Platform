@@ -74,6 +74,11 @@
                   <strong>{{ comment.user.username }}</strong>
                   <span class="text-muted small">({{ comment.created_at|date:"Y-m-d H:i" }})</span>
                   <p class="mb-0">{{ comment.content }}</p>
+                  {% if comment.user == user or perms.courses_app.can_delete_comment %}
+                      <a href="{% url 'delete_comment' comment.id %}" class="btn btn-sm btn-outline-danger float-end mt-1">
+                        Delete
+                      </a>
+                  {% endif %}
                 </li>
               {% endfor %}
             </ul>

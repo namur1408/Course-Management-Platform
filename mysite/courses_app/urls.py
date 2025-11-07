@@ -7,7 +7,8 @@ from .views import (
     CourseDetailView,
     enroll_course,
     unenroll_course,
-    comment_course
+    comment_course,
+    CommentDeleteView
 )
 
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
     path('<int:pk>/update/', CourseUpdateView.as_view(), name='update_course'),
     path('<int:pk>/courses', CourseDetailView.as_view(), name='course_detail'),
     path('<int:pk>/comments/', comment_course, name='comment_course'),
+    path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='delete_comment'),
 ]
