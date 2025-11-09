@@ -9,10 +9,10 @@ class ActionLog(models.Model):
         ('create_course', 'Creation course'),
         ('update_course', 'Updation of the course'),
         ('delete_course', 'Deleting course'),
-        ('admin_delete_course', "Banning someone's course as an admin"),
         ('login', 'Login'),
         ('logout', 'Logout'),
         ('comment', 'Comment'),
+        ('delete_comment', 'Delete comment'),
         ('enroll', 'Course Enrollment'),
         ('unenroll', 'Course Unenrollment'),
     ]
@@ -24,7 +24,7 @@ class ActionLog(models.Model):
     )
     action_type = models.CharField(max_length=20, choices=ACTION_CHOICES)
     timestamp = models.DateTimeField(default=timezone.now)
-    content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True)
     content_object = GenericForeignKey('content_type', 'object_id')
 

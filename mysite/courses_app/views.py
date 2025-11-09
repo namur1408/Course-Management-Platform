@@ -84,7 +84,6 @@ class CourseDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     context_object_name = 'course'
     success_url = reverse_lazy('course_list')
     permission_required = 'courses_app.can_delete_course'
-
     def has_permission(self):
         course = self.get_object()
         return (course.creator == self.request.user
