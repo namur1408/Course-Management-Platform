@@ -2,6 +2,8 @@ from django.db import models
 from members_app.models import Member
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.fields import GenericRelation
+from ActionLog.models import ActionLog
 User = get_user_model()
 
 class Course(models.Model):
@@ -14,6 +16,8 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
+
+    action_logs = GenericRelation(ActionLog)
 
     class Meta:
         permissions = [
@@ -30,6 +34,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.user.username} on {self.course.title}'
+
+    action_logs = GenericRelation(ActionLog)
 
     class Meta:
         permissions = [

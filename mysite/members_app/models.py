@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager, UserManager
 from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericRelation
+from ActionLog.models import ActionLog
 
 class MemberManager(BaseUserManager):
     def create_user(self, email, phone, password=None, **extra_fields):
@@ -45,6 +47,8 @@ class Member(AbstractUser, PermissionsMixin):
     objects = MemberManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['phone']
+
+    action_logs = GenericRelation(ActionLog)
 
     class Meta:
         verbose_name = 'User'

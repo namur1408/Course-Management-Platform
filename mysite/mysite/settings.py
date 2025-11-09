@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'courses_app.apps.CoursesAppConfig',
     'members_app.apps.MembersAppConfig',
     'library.apps.LibraryConfig',
+    'ActionLog.apps.ActionlogConfig',
     'django_extensions'
 ]
 
