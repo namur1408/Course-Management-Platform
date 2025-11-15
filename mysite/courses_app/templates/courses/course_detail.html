@@ -31,6 +31,13 @@
               <p class="text-muted">{{ course.description }}</p>
               <p><strong>Start:</strong> {{ course.start_date }}</p>
               <p><strong>End:</strong> {{ course.end_date }}</p>
+              <p><strong>Teacher:</strong>
+                {% if course.teacher %}
+                    {{ course.teacher.user.get_full_name }} — {{ course.teacher.specialization }}
+                {% else %}
+                    <span class="text-muted">No teacher assigned</span>
+                {% endif %}
+              </p>
               <p class="mb-3">
                     <strong>Members:</strong>
                     {% for m in course.members.all %}

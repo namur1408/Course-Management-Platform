@@ -32,7 +32,7 @@ class Member(AbstractUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name='email address', null=True)
     phone = models.CharField(max_length=20, unique=True, verbose_name='Phone number')
     first_name = models.CharField(max_length=30, verbose_name='First name', blank=True)
-    last_name = models.CharField(max_length=50, verbose_name='First name', blank=True)
+    last_name = models.CharField(max_length=50, verbose_name='Last name', blank=True)
     date_of_birth = models.DateField(null=True, verbose_name='Date of birth', blank=True)
     address = models.CharField(max_length=255, verbose_name='Address')
     profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)

@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses_app.apps.CoursesAppConfig',
     'members_app.apps.MembersAppConfig',
-    'library.apps.LibraryConfig',
     'ActionLog.apps.ActionlogConfig',
+    'teachers_app.apps.TeachersAppConfig',
+    'task_api.apps.TaskApiConfig',
+    'rest_framework',
     'django_extensions'
 ]
 
