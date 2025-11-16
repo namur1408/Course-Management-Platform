@@ -92,10 +92,10 @@ class CourseDeleteView(
     permission_required = 'courses_app.can_delete_course'
     action_type = 'delete_course'
 
-    def delete(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         obj = self.get_object()
         self.log_action(obj)
-        return super().delete(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
 
 class CourseUpdateView(
     LoginRequiredMixin,
