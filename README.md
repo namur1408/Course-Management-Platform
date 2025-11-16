@@ -71,12 +71,26 @@ Users can register, log in, and enroll in available courses.
  
 - Custom User
 
+- Adding/Deleting comments under the course
+
 ##  Project Structure
 ```text
 mysite/
 │
 ├── courses_app/
+│   ├── admins.py          
+│   ├── models.py          
+│   ├── apps.py            
+│   ├── signals.py         
+│   ├── views.py           
+│   └── urls.py            
+│   
+│      
+│
+├── courses_app/
+│   ├── admins.py          
 │   ├── models.py          # Course model (many-to-many with Member)
+│   ├── apps.py          
 │   ├── forms.py           # Course creation form with validation
 │   ├── views.py           # Course list, creation, and enrollment views
 │   ├── urls.py            # Routes for course pages
@@ -84,12 +98,22 @@ mysite/
 │       └── courses/       # Templates for course list and forms
 │
 ├── members_app/
+│   ├── admins.py  
 │   ├── models.py          # Member model linked to Django User
+│   ├── apps.py    
 │   ├── forms.py           # Registration and login forms
 │   ├── views.py           # Registration and authentication logic
 │   ├── urls.py            # Routes for user auth
 │   └── templates/
 │       └── registration/  # Login and register pages
+├── teachers_app/
+│   ├── admins.py  
+│   ├── models.py          
+│   ├── apps.py    
+│   ├── forms.py           
+│   ├── views.py           
+│   └── urls.py            
+│       
 │
 ├── mysite/
 │   ├── settings.py
@@ -104,12 +128,18 @@ mysite/
 
 - Python 3.13
 
-- Django 5.2
+- Django 5.2.7
+
+- Django REST Framework 3.16
+
+- SimpleJWT 5.5
 
 - pillow 12.0
+
+- django-extensions 4.1
+
+- PostgreSQL (psycopg2-binary 2.9.11)
  
 - Bootstrap 5 for styling forms
-
-- SQLite
 
 
