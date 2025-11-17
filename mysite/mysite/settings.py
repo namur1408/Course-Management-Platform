@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 from django.conf.global_settings import AUTH_USER_MODEL
 
@@ -39,13 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'django_extensions',
     'courses_app.apps.CoursesAppConfig',
     'members_app.apps.MembersAppConfig',
     'ActionLog.apps.ActionlogConfig',
     'teachers_app.apps.TeachersAppConfig',
-    'task_api.apps.TaskApiConfig',
-    'rest_framework',
-    'django_extensions'
+    'course_api'
 ]
 
 MIDDLEWARE = [
@@ -142,3 +144,19 @@ CSRF_TRUSTED_ORIGINS = [
     'http://hyperglycaemic-ricardo-overconservatively.ngrok-free.dev',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
