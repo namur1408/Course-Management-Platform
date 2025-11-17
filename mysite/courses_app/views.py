@@ -89,7 +89,7 @@ class CourseDeleteView(
     template_name = 'courses/course_confirm_delete.html'
     context_object_name = 'course'
     success_url = reverse_lazy('course_list')
-    permission_required = 'courses_app.can_delete_course'
+    permission_required = 'courses_app.can_delete_courses'
     action_type = 'delete_course'
 
     def post(self, request, *args, **kwargs):
