@@ -1,8 +1,8 @@
 # Django Courses Project
 
-A simple Django web application that manages courses and members.
-Users can register, log in, and enroll in available courses.
-
+A Django web application designed for managing courses, teachers, and user interactions.
+The platform allows users to register, authenticate, enroll in courses, leave comments, and interact with dynamic course content.
+The project demonstrates practical implementation of Django basics, advanced features, and backend architecture patterns.
 
 ## Installation
 
@@ -33,45 +33,62 @@ Users can register, log in, and enroll in available courses.
 
 ## Features
 
- - User Registration
-
-    Custom registration form with:
-
-    - Username
-
-    - First name, Last name
-
-    - Email
-
-    - Phone
-
-    - Address
-
-    - Password confirmation
-
-- User Authentication:
-
-    - Login / Logout using Django’s built-in system.
+- Custom registration
+      
+- Custom User System
+  
+    - Custom user model
+      
+    - JWT authentication
+ 
+    - login/logout flows
+ 
+    - Role-based permissions for admins and content creators
 
 - Course Management:
 
-    - Create new courses with title, description, start and end date.
+    - Create, update, and delete courses
  
-    - Delete course.
+    - Each course includes
+      
+       - Title, description
+     
+       - Start and end dates
+     
+       - Assigned teacher
+     
+       - Creator
+     
+       - Many-to-many student enrollment
 
-    - Prevents duplicate course names using form validation.
+    - Prevents duplicate course names using form validation
 
-    - Date validation ensures start < end date.
+    - Date validation ensures start < end date
 
-- Course Enrollment:
+- Course Enrollment
 
-    - Authenticated users can enroll in courses.
+    - Authenticated users can enroll in courses
 
-    - Many-to-many relationship between Course and Member.
- 
-- Custom User
+    - Many-to-many relationship between Course and Member
 
-- Adding/Deleting comments under the course
+- Comment System
+
+    - Users can leave comments under each course
+
+    - Delete/edit permissions: users can delete only their own comments; admins can delete any
+
+    - GenericRelation for attaching action logs
+
+- Action Log System
+
+    - ActionLog model tracks:
+
+    - User actions (create/delete courses, enroll, comment, login/logout, etc.)
+
+    - Timestamp and user info
+
+    - Lcustom pre_delete signal safely nullifies content_type and object_id
+
 
 ##  Project Structure
 ```text
@@ -85,27 +102,30 @@ mysite/
 │   ├── views.py           
 │   └── urls.py            
 │   
-│      
+├── courses_api/      
+│   ├── apps.py          
+│   ├── auth.py           
+│   └──  views.py        
 │
 ├── courses_app/
 │   ├── admins.py          
-│   ├── models.py          # Course model (many-to-many with Member)
+│   ├── models.py          
 │   ├── apps.py          
-│   ├── forms.py           # Course creation form with validation
-│   ├── views.py           # Course list, creation, and enrollment views
-│   ├── urls.py            # Routes for course pages
+│   ├── forms.py           
+│   ├── views.py           
+│   ├── urls.py            
 │   └── templates/
-│       └── courses/       # Templates for course list and forms
+│       └── courses/       
 │
 ├── members_app/
 │   ├── admins.py  
-│   ├── models.py          # Member model linked to Django User
+│   ├── models.py          
 │   ├── apps.py    
-│   ├── forms.py           # Registration and login forms
-│   ├── views.py           # Registration and authentication logic
-│   ├── urls.py            # Routes for user auth
+│   ├── forms.py           
+│   ├── views.py           
+│   ├── urls.py           
 │   └── templates/
-│       └── registration/  # Login and register pages
+│       └── registration/  
 ├── teachers_app/
 │   ├── admins.py  
 │   ├── models.py          
