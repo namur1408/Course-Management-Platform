@@ -1,4 +1,5 @@
 import jwt
+import json
 from datetime import datetime, timedelta, timezone
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -21,7 +22,10 @@ class CourseJwtAuth(BaseAuthentication):
             user = User.objects.get(id=user_id)
             return (user, token)
         except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Token expired')
+            raise AuthenticationFailed({
+                'error': 'expired token_error',
+                'message': 'token_expired',
+            })
         except jwt.InvalidTokenError:
             raise AuthenticationFailed('Invalid token')
         except User.DoesNotExist:

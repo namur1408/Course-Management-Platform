@@ -42,7 +42,7 @@ class MemberChangeForm(forms.ModelForm):
 @admin.register(Member)
 class TaskUserAdmin(UserAdmin):
     inlines = [BillingAdressInLine]
-    list_display = ('email', 'phone', 'is_active')
+    list_display = ('email', 'phone', 'first_name', 'last_name', 'phone', 'is_active')
     ordering = ['-date_joined',]
     form = MemberChangeForm
 
