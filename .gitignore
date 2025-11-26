@@ -1,0 +1,36 @@
+# Django & Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Testing & cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Static & media (generated)
+mysite/static/
+static/
+staticfiles/
+media/
+
+# macOS junk
+.DS_Store
+
+# IMPORTANT: keep migrations!
+!*/migrations/
+!*/migrations/*.py

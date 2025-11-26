@@ -15,7 +15,7 @@ User = get_user_model()
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [AllowAny]
+    # permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -53,9 +53,10 @@ class CourseTokenObtainPairView(APIView):
         if user:
             tokens = generate_jwt_token(user)
             return Response(tokens, status=status.HTTP_200_OK)
-        return Response({'error': 'Invalid datф for authorisation'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'error': 'Invalid data for authorisation'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class CourseRefreshView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         refresh_token = request.data.get('refresh')
         try:
@@ -65,10 +66,10 @@ class CourseRefreshView(APIView):
             tokens = generate_jwt_token(user)
             return Response(tokens, status=status.HTTP_200_OK)
         except jwt.ExpiredSignatureError:
-            raise Response({'error': 'Token has expired'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Token has expired'}, status=status.HTTP_401_UNAUTHORIZED)
         except jwt.InvalidTokenError:
-            raise Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
-            raise Response({'error': 'Invalid user'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Invalid user'}, status=status.HTTP_401_UNAUTHORIZED)
 
 

@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 from django.conf.global_settings import AUTH_USER_MODEL
 
@@ -23,10 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9)(no*z$4d^bl$zf%%2+no$_8i(k%2v$#z23zbabup)um8$)vl'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-9)(no*z$4d^bl$zf%%2+no$_8i(k%2v$#z23zbabup)um8$)vl')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False")
 
 ALLOWED_HOSTS = ['*']
 
@@ -47,7 +51,7 @@ INSTALLED_APPS = [
     'members_app.apps.MembersAppConfig',
     'ActionLog.apps.ActionlogConfig',
     'teachers_app.apps.TeachersAppConfig',
-    'course_api'
+    'course_api.apps.CourseApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -86,10 +90,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'course_db',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': '5432',
     }
 }
@@ -130,11 +134,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 LOGIN_URL = '/registration/login/'
 LOGIN_REDIRECT_URL = '/courses/'
 AUTH_USER_MODEL = 'members_app.Member'
@@ -161,3 +167,9 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
+
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / '/media'
