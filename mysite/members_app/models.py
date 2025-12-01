@@ -11,6 +11,7 @@ class MemberManager(BaseUserManager):
         if not phone:
             raise ValueError('User must have phone number')
         email = self.normalize_email(email)
+        extra_fields['username'] = email
         user = self.model(email=email, phone=phone, **extra_fields)
         user.set_password(password)
         user.save()
